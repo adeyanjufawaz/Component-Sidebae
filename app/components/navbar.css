@@ -1,0 +1,10 @@
+.isOpen{
+    position: absolute;
+    transition: all 550ms ease-in-out;
+    left: 0;
+}
+.isClosed{
+    position: absolute;
+    transition: all 550ms ease-in-out;
+    left: 100%;
+}

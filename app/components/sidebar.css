@@ -1,0 +1,11 @@
+.sidebar{
+    @apply absolute h-full bg-red-500;
+    transition: all .4s linear;
+    z-index: 99;
+}
+.sidebar.active{
+    width: 200px;
+}
+.sidebar.nonActive{
+    width: 90px;
+}
