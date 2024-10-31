@@ -2,6 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-  height: 300vh;
+/*  Import Fint*/
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+body {
+  font-family: "Open Sans", sans-serif;
+}
+.customized_header {
+  @apply lg:text-[48px] text-[32px] mb-6 font-bold;
+}
+.customized_h1 {
+  @apply text-[2rem] font-bold leading-[3rem] tracking-wide;
+}
+.customized_h2 {
+  @apply text-[1.2rem] font-normal;
+}
+.customized_h3 {
+  @apply my-6 font-semibold text-[1rem] cursor-pointer;
+}
+.customized_p {
+  @apply text-[14px] lg:text-[18px];
+}
+.customized_btn {
+  @apply border py-3 rounded-lg text-white bg-pry px-10;
+}
+
+.polaroid {
+  box-shadow: 5px 5px 20px #aaaaaa;
+  z-index: 999999999;
+  background-color: aliceblue;
+  opacity: 0.87;
+}
+.homes {
+  /* background-image: url("../img/think.png"); */
+  min-height: 500px;
+
+  background: linear-gradient(
+      to bottom right,
+      rgba(0, 0, 0, 0.77),
+      rgba(0, 0, 0, 0.58)
+    ),
+    url("../public/think.png");
+
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
 }
