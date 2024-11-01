@@ -18,7 +18,7 @@ body {
   @apply text-[1.2rem] font-normal;
 }
 .customized_h3 {
-  @apply my-6 font-semibold text-[1rem] cursor-pointer;
+  @apply font-semibold text-[1rem] cursor-pointer;
 }
 .customized_p {
   @apply text-[14px] lg:text-[18px];

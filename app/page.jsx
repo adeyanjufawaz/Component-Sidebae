@@ -5,9 +5,13 @@ import mainMan from "../public/mainMan.png";
 import img1 from "../public/staff1.png"
 import img2 from "../public/staff2.png"
 import img3 from "../public/staff3.png"
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  // const aboutRef = useRef(null)
+  const router = useRouter()
+  const handleClick = () => {
+      router.push("/blogs")
+  }
 
   return (
     <>
@@ -21,7 +25,7 @@ export default function Home() {
             Unleash the Power of Words, Connect with Like-minded Readers and
             Writers
           </h2>
-          <button className="customized_btn">Get started</button>
+          <button onClick={handleClick} className="customized_btn">Get started</button>
         </div>
       </section>
 
@@ -64,7 +68,7 @@ export default function Home() {
             interests and able to communicate your great ideas with people
           </p>
           <div className="grid grid-cols-1 items-center lg:grid-cols-3 w-[70%] justify-center mt-16 gap-10">
-            <div className="min-h-[250px] flex flex-col gap-4 p-5 border-[grey] border rounded-[7px]">
+            <div className="min-h-[250px] md:min-h-[120px] flex flex-col gap-4 p-5 border-[grey] border rounded-[7px]">
               <h2 className="customized_h1">Analytics</h2>
               <p className="">
                 Analytics to track the number of views, likes and comment and
@@ -72,14 +76,14 @@ export default function Home() {
                 time
               </p>
             </div>
-            <div className="min-h-[250px] flex flex-col gap-4 p-5 border-[grey] border rounded-[7px]">
+            <div className="min-h-[250px] md:min-h-[120px] flex flex-col gap-4 p-5 border-[grey] border rounded-[7px]">
               <h2 className="customized_h1">Social Interactions</h2>
               <p>
                 Users on the platform can interact with posts they like, comment
                 and engage in discussions
               </p>
             </div>
-            <div className="min-h-[250px] flex flex-col gap-4 p-5 border-[grey] border rounded-[7px]">
+            <div className="min-h-[250px] md:min-h-[120px] flex flex-col gap-4 p-5 border-[grey] border rounded-[7px]">
               <h2 className="customized_h1">Content creation.</h2>
               <p>
                 Write nice and appealing with our in-built markdown, a rich text

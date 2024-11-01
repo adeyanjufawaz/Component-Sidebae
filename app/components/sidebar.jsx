@@ -46,7 +46,7 @@ export default function Sidebar() {
           );
         })}
         <button className="bg-blue-400 p-4" onClick={toggleSideNav}>
-          clckc me
+          click me
         </button>
       </div>
     </>

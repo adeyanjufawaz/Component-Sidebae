@@ -1,3 +1,5 @@
+
+
 export const moveToAbout = () => {
   const aboutPage = document.querySelector("#about");
   aboutPage.scrollIntoView({

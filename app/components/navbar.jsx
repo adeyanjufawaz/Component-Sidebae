@@ -10,31 +10,24 @@ export default function Navbar() {
   return (
     <div className="w-full z-10 fixed top-0  ">
       {/* Desktop Nav */}
-      <nav className="hidden z-20 h-[70px] polaroid lg:flex items-center justify-between py-4 px-10 drop-shadow-2xl ">
-        <div>
-          <h2 className="self-start font-semibold text-pry text-[1.5rem] uppercase ">
-            <Link href="/">CHatter</Link>
-          </h2>
-        </div>
-        <div className="flex  gap-10 ">
-          <button className="customized_h3" onClick={moveToAbout}>
-            About us
-          </button>
-          <button className="customized_h3" onClick={moveToReview}>
-            Reviews
-          </button>
+      <nav className="z-20 h-[70px] polaroid flex justify-between py-4 px-4 md:px-10 drop-shadow-2xl ">
+        <h2 className="w-[10%] self-start font-semibold text-pry text-[1.5rem] uppercase ">
+          <Link href="/">CHatter</Link>
+        </h2>
+
+        <div className="flex gap-3 ">
           <button className="customized_h3">
-            <Link href="/blog">Blog</Link>
+            <Link href="/blogs">Blogs</Link>
+          </button>
+          <button className="border rounded-lg text-white bg-pry px-6">
+            <Link href="/login">Login</Link>
           </button>
         </div>
-        <button className="customized_btn">Login</button>
       </nav>
 
       {/* -------------------> */}
       {/* Mobile Nav */}
-      <nav
-        className={`lg:hidden h-14 polaroid p-4 fixed top-0 w-full `}
-      >
+      {/* <nav className={`lg:hidden h-14 polaroid p-4 fixed top-0 w-full `}>
         <div className="flex justify-between">
           <div>
             <h2 className="self-start font-semibold text-pry text-[1.5rem] uppercase ">
@@ -49,12 +42,15 @@ export default function Navbar() {
           } `}
         >
           <div className="flex flex-col justify-end items-end p-8">
-            <button>Home</button>
-            <button>Home</button>
-            <button>Home</button>
+            <button className="customized_h3">
+              <Link href="/">Home</Link>
+            </button>
+            <button className="customized_h3">
+              <Link href="/blog">Blogs</Link>
+            </button>
           </div>
         </section>
-      </nav>
+      </nav> */}
     </div>
   );
 }
