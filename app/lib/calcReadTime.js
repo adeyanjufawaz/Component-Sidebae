@@ -6,7 +6,7 @@ export const calculateReadTime = (text) => {
   // Calculate read time in minutes
   const minutes = Math.ceil(words / wordsPerMinute);
 
-  return minutes;
+  return `${minutes} mins`;
 };
 
 // Example usage

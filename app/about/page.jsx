@@ -1,18 +1,35 @@
 "use client";
-import { db, storage } from "@/config/firebase";
+import { auth, db, storage } from "@/config/firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { formmatedDate } from "../lib/dateFormatter";
 
 export default function About() {
-  const [blogData, setBlogData] = useState({});
+  const [publisher, setPublisher] = useState("");
+  const [blogData, setBlogData] = useState({
+    datePublished: formmatedDate(),
+  });
   const [blogImg, setBlogImg] = useState("");
+  const [publisherid, setPublisherID] = useState("");
 
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     setBlogData({ ...blogData, [name]: value });
   };
+
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (user) {
+      console.log(user);
+      setPublisherID(user.uid);
+      setPublisher(user.displayName);
+    } else {
+      console.log("No user is logged in.");
+    }
+    console.log(blogData);
+  }, [blogData]);
 
   useEffect(() => {
     const uploadFile = () => {
@@ -40,7 +57,12 @@ export default function About() {
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             console.log("File available at", downloadURL);
-            setBlogData({ ...blogData, img: downloadURL });
+            setBlogData({
+              ...blogData,
+              publisherID: publisherid,
+              author: publisher,
+              img: downloadURL,
+            });
           });
         }
       );

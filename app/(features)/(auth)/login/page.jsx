@@ -7,13 +7,15 @@ import { BiLogoGmail } from "react-icons/bi";
 import loginSvg from "../../../../public/loginsvg.png";
 import Image from "next/image";
 
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { auth, googleProvider } from "@/config/firebase";
 import { signInWithPopup } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/context/AuthProvider";
 
-export default function Login () {
+export default function Login() {
   const router = useRouter();
+  const { user, setUser } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const popRef = useRef(null);
   // Form states
@@ -25,51 +27,57 @@ export default function Login () {
 
   const togglePassword = () => setShowPassword((prev) => !prev);
 
-  const displayNotification = () => {
-    popRef.current.style.display = "block";
-    setTimeout(() => {
-      popRef.current.style.display = "none";
-    }, 1300);
-  };
-
   useEffect(() => {
-    SetPopMessage(popMessage);
-  }, [popMessage]);
+    // Listen for auth state changes
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    // Cleanup listener on component unmount
+    return () => unsubscribe();
+  }, []);
 
   // Login Function
-  const login = async (e, email, password) => {
-    e.preventDefault();
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      setIsSuccesful(true);
-      SetPopMessage("Login successful" + user.uid);
-      displayNotification();
-      router.push("/blogs");
-    } catch (error) {
-      const errorCode = error.code;
-      setIsSuccesful(false);
-      SetPopMessage(errorCode);
-      displayNotification();
-    }
-  };
-  
+  // const login = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     await signInWithEmailAndPassword(auth, email, password);
+  //     setIsSuccesful(true);
+  //     SetPopMessage("Login successful");
+  //     router.push("/blogs");
+  //     displayNotification();
+  //   } catch (error) {
+  //     const errorCode = error.code;
+  //     setIsSuccesful(false);
+  //     SetPopMessage(errorCode);
+  //     displayNotification();
+  //   }
+  // };
+
   // Signinwith google popup
   const signInWithGooglePopup = async (e) => {
     e.preventDefault();
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
-      setIsSuccesful(true)
-      SetPopMessage("Login successful")
+      setIsSuccesful(true);
+      SetPopMessage("Login successful");
       router.push("/blogs");
+      displayNotification();
     } catch (error) {
-      console.error("Error during sign-in:", error);
+      const errorCode = error.code;
+      setIsSuccesful(false);
+      SetPopMessage("Check your internet connection !!!");
+      displayNotification();
     }
+  };
+  const displayNotification = () => {
+    popRef.current.style.display = "block";
   };
 
   return (
-    <>
-      <div className="flex justify-center items-center relative  ">
+    <div className="min-h-[80vh] flex justify-center items-center">
+      <div className="flex justify-center  h-full items-center relative  ">
         <div
           style={
             isSuccessful
@@ -81,13 +89,13 @@ export default function Login () {
         >
           <h2>{popMessage}</h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-[1fr,1.5fr]">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr,1.2fr]">
           <div className="hidden md:block">
             <Image src={loginSvg} alt="loginSvg" />
           </div>
 
           <div className="flex flex-col gap-3 justify-center items-center">
-            <form className="border-4 mt-8 md:mt-0 border-pry border-double w-full md:w-1/2 p-6">
+            <form className="border-4 mt-8 md:mt-0 border-pry border-double w-full md:w-3/4 lg:w-1/2 p-6">
               <div className="flex flex-col gap-2">
                 <h2 className="customized_h3">Email:</h2>
                 <input
@@ -139,6 +147,6 @@ export default function Login () {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -1,8 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/navbar";
-
-
+// import AuthProvider from "./context/AuthProvider";
 
 export const metadata = {
   title: "Create Next App",
@@ -12,12 +11,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={` antialiased layt overflow-x-hidden `}
-      >
-        <Navbar />
-        <div className="lg:mt-[70px] mt-16">{children}</div>
-      </body>
+        <body className={` antialiased layt overflow-x-hidden `}>
+          <Navbar />
+          <div className="lg:mt-[70px] mt-16">{children}</div>
+        </body>
     </html>
   );
 }

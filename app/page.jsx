@@ -8,10 +8,6 @@ import img3 from "../public/staff3.png"
 import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const router = useRouter()
-  const handleClick = () => {
-      router.push("/blogs")
-  }
 
   return (
     <>
@@ -25,7 +21,6 @@ export default function Home() {
             Unleash the Power of Words, Connect with Like-minded Readers and
             Writers
           </h2>
-          <button onClick={handleClick} className="customized_btn">Get started</button>
         </div>
       </section>
 
@@ -52,7 +47,7 @@ export default function Home() {
               alt="Children"
               width={500}
               height={300}
-              layout="responsive"
+             
             />
           </div>
         </div>
@@ -114,7 +109,6 @@ export default function Home() {
             <h2 className="my-12">
               <b>Adebobola Muhydeen</b>, Software developer at Apple
             </h2>
-            <button className="customized_btn">Get Started</button>
           </div>
         </div>
       </section>
@@ -148,7 +142,6 @@ export default function Home() {
             Share people your great ideas, and also read write-ups based on your
             interests. connect with people of same interests and goals
           </p>
-          <button className="customized_btn">Get Started</button>
         </div>
       </section>
     </>

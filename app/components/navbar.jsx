@@ -1,12 +1,59 @@
 "use client";
 import { useState } from "react";
 import "./navbar.css";
-import { moveToAbout, moveToReview } from "../lib/random";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/config/firebase";
+
+import { useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { logout } from "../(features)/(auth)/lib/logout";
+
+import { googleProvider } from "@/config/firebase";
+import { signInWithPopup } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
+  const router = useRouter();
   const [isOpen, setIsopen] = useState(false);
-  const toggle = () => setIsopen((prev) => !prev);
+  const [currentUser, setCurrentUser] = useState("");
+  const [loggedUser, setloggedUser] = useState("");
+  const [userProfile, setUserProfile] = useState("");
+
+  const toggle = () => setIsopen(!isOpen);
+
+  useEffect(() => {
+    // Listen for auth state changes
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setCurrentUser(currentUser);
+      if (currentUser) {
+        setloggedUser(currentUser);
+        setCurrentUser(
+          currentUser.displayName ? currentUser.email.slice(0, 1) : "--"
+        );
+        setUserProfile(currentUser.photoURL ? currentUser.photoURL : "");
+      }
+    });
+
+    // Cleanup listener on component unmount
+    return () => unsubscribe();
+  }, []);
+
+  const signInWithGooglePopup = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      router.push("/blogs");
+    } catch (error) {
+      const errorCode = error.code;
+      console.log(errorCode);
+    }
+  };
+
+  const goToBlogs = (e) => {
+    signInWithGooglePopup(e);
+  };
+
   return (
     <div className="w-full z-10 fixed top-0  ">
       {/* Desktop Nav */}
@@ -16,41 +63,51 @@ export default function Navbar() {
         </h2>
 
         <div className="flex gap-3 ">
-          <button className="customized_h3">
-            <Link href="/blogs">Blogs</Link>
+          <button className="customized_h3" onClick={goToBlogs}>
+            <p>Blogs</p>
           </button>
-          <button className="border rounded-lg text-white bg-pry px-6">
-            <Link href="/login">Login</Link>
-          </button>
+
+          {/* SignIn and SignOut buttons */}
+          {currentUser ? (
+            // If signed in show this
+            <div className="relative" onClick={toggle}>
+              {userProfile ? (
+                // If the user has a profile show profile
+                <Image
+                  src={userProfile}
+                  alt="user profile"
+                  width={40}
+                  height={40}
+                  className="rounded-full cursor-pointer"
+                />
+              ) : (
+                // If user does not have a profile show display name
+                <button className="bg-pry flex text-white items-center justify-center rounded-full w-[40px] h-[40px]">
+                  <h2 className="text-white">{currentUser}</h2>
+                </button>
+              )}
+
+              <button
+                onClick={() => {
+                  logout();
+                  router.push("/");
+                }}
+                style={isOpen ? { display: "flex" } : { display: "none" }}
+                className="absolute customized_btn mt-1 !bg-gray-700 justify-center items-center right-0 p-1"
+              >
+                logout
+              </button>
+            </div>
+          ) : (
+            // If signed out show this
+            <button className="border rounded-lg text-white bg-pry px-6">
+              <Link onClick={signInWithGooglePopup} href="/login">
+                Login
+              </Link>
+            </button>
+          )}
         </div>
       </nav>
-
-      {/* -------------------> */}
-      {/* Mobile Nav */}
-      {/* <nav className={`lg:hidden h-14 polaroid p-4 fixed top-0 w-full `}>
-        <div className="flex justify-between">
-          <div>
-            <h2 className="self-start font-semibold text-pry text-[1.5rem] uppercase ">
-              <Link href="/">CHatter</Link>
-            </h2>
-          </div>
-          <button onClick={toggle}>toggle</button>
-        </div>
-        <section
-          className={`bg-slate-300 w-full h-[90vh] mt-4 ${
-            isOpen ? "isOpen " : "isClosed "
-          } `}
-        >
-          <div className="flex flex-col justify-end items-end p-8">
-            <button className="customized_h3">
-              <Link href="/">Home</Link>
-            </button>
-            <button className="customized_h3">
-              <Link href="/blog">Blogs</Link>
-            </button>
-          </div>
-        </section>
-      </nav> */}
     </div>
   );
 }
