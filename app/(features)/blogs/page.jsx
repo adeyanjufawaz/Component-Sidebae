@@ -9,6 +9,7 @@ import img from "../../../public/mainMan.png";
 import { onAuthStateChanged } from "firebase/auth";
 import { calculateReadTime } from "@/app/lib/calcReadTime";
 import Link from "next/link";
+import { doc, deleteDoc } from "firebase/firestore";
 
 // Blogs.js
 
@@ -31,29 +32,35 @@ const Blogs = () => {
     return () => unsubscribe();
   }, [loggedUserID]);
 
+  const getBlogs = async () => {
+    try {
+      const blogsCollection = collection(db, "blogs");
+      const blogsSnapshot = await getDocs(blogsCollection);
+      const blogsList = blogsSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setBlogs(blogsList);
+      // console.log(users);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     // Function to fetch data from Firestore
-    const getBlogs = async () => {
-      try {
-        const blogsCollection = collection(db, "blogs");
-        const blogsSnapshot = await getDocs(blogsCollection);
-        const blogsList = blogsSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setBlogs(blogsList);
-        // console.log(users);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
 
     getBlogs();
   }, []);
 
   // if (loading) return <p>Loading...</p>;
+
+  const deleteBlog = async (blogID) => {
+    await deleteDoc(doc(db, "blogs", blogID));
+    getBlogs();
+  };
 
   return (
     <div className=" p-3 md:p-7">
@@ -70,22 +77,7 @@ const Blogs = () => {
           <p>Create</p>
         </Link>
       </div>
-      {/* <div className="flex flex-wrap gap-5">
-        {console.log(blogs)}
-        <>
-          {blogs.map((blog) => (
-            <div key={blog.id}>
-              {blog.id} - {blog.blogTitle} -{blog.category}
-              <p>
-                {" "}
-                BlogID: {blog.publisherID} loggedUserID: {loggedUserID}{" "}
-                <Image alt="bloImg" src={blog.img} width={400} height={400} />
-              </p>
-              <h2>Read time: {calculateReadTime(blog.blogTitle)}</h2>
-            </div>
-          ))}
-        </>
-      </div> */}
+
       <div className="min-h-8 mt-10 gap-7 lg:gap-10 flex flex-wrap justify-center ">
         {blogs.map((blog) => {
           console.log(blog);
@@ -107,17 +99,17 @@ const Blogs = () => {
               >
                 {/* Card__Img-section */}
 
-                <div className="h-24 md:h-40 lg:h-60 w-full mt-4 relative rounded-md">
+                <div className={`h-24 md:h-40 lg:h-60 bg-slate-500 ${!img && "animate-pulse"} w-full mt-4 relative rounded-md`}>
                   <Image
                     src={img}
                     width={100}
                     height={100}
                     className="absolute rounded-md w-full h-full"
-                    alt="djjdjd"
+                    alt={category}
                   />
                 </div>
 
-                <button className="bg-pry p-2 text-xs lg:text-base font-medium  mt-4 text-white">
+                <button className="cursor-auto bg-pry p-2 text-xs lg:text-base font-medium  mt-4 text-white">
                   {category}
                 </button>
                 <p className="mt-4 truncate ">{blogTitle}</p>
@@ -130,7 +122,16 @@ const Blogs = () => {
                     {datePublished}
                   </p>
                 </div>
-                <p >{ calculateReadTime(blogContent)} read</p>
+                <p>{calculateReadTime(blogContent)} read</p>
+
+                {loggedUserID == publisherID && (
+                  <button
+                    onClick={() => deleteBlog(id)}
+                    className="mt-4 bg-red-500 py-2 px-5 right-0"
+                  >
+                    Delete
+                  </button>
+                )}
               </div>
             </>
           );
