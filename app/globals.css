@@ -26,6 +26,9 @@ body {
 .customized_btn {
   @apply border py-3 rounded-lg text-white bg-pry px-10;
 }
+.blog_btn {
+  @apply border py-2 md:py-3 rounded-lg text-white bg-pry md:px-10 px-3;
+}
 
 .polaroid {
   box-shadow: 5px 5px 20px #aaaaaa;

@@ -66,46 +66,6 @@ export default function Navbar() {
           <button className="customized_h3" onClick={goToBlogs}>
             <p>Blogs</p>
           </button>
-
-          {/* SignIn and SignOut buttons */}
-          {currentUser ? (
-            // If signed in show this
-            <div className="relative" onClick={toggle}>
-              {userProfile ? (
-                // If the user has a profile show profile
-                <Image
-                  src={userProfile}
-                  alt="user profile"
-                  width={40}
-                  height={40}
-                  className="rounded-full cursor-pointer"
-                />
-              ) : (
-                // If user does not have a profile show display name
-                <button className="bg-pry flex text-white items-center justify-center rounded-full w-[40px] h-[40px]">
-                  <h2 className="text-white">{currentUser}</h2>
-                </button>
-              )}
-
-              <button
-                onClick={() => {
-                  logout();
-                  router.push("/");
-                }}
-                style={isOpen ? { display: "flex" } : { display: "none" }}
-                className="absolute customized_btn mt-1 !bg-gray-700 justify-center items-center right-0 p-1"
-              >
-                logout
-              </button>
-            </div>
-          ) : (
-            // If signed out show this
-            <button className="border rounded-lg text-white bg-pry px-6">
-              <Link onClick={signInWithGooglePopup} href="/login">
-                Login
-              </Link>
-            </button>
-          )}
         </div>
       </nav>
     </div>

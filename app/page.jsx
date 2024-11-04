@@ -114,7 +114,7 @@ export default function Home() {
       </section>
 
       {/* Footer Section */}
-      <section className="grid gap-16 p-[3rem] lg:p-20 grid-cols-[.5fr,1] lg:grid-cols-[1fr,3fr] ">
+      <section className="grid gap-16 p-[3rem] grid-cols-[.5fr,1] lg:grid-cols-[1fr,3fr] ">
         <div className="img--box relative mx-auto w-full md:w-1/2  lg:w-full min-h-[300px]">
           <Image
             src={img1}
@@ -138,7 +138,7 @@ export default function Home() {
           <h1 className="customized_h1 mb-6">
             Write, read and connect with great minds on chatter
           </h1>
-          <p className="customized_p mb-10">
+          <p className="customized_p">
             Share people your great ideas, and also read write-ups based on your
             interests. connect with people of same interests and goals
           </p>
