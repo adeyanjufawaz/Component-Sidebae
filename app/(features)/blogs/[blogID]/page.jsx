@@ -41,8 +41,6 @@ function GetDocument({ params }) {
 
   return (
     <div className="p-10">
-      {console.log(documentData)}
-      {console.log(docs)}
       {docs.map((doc) => {
         const {
           author,
@@ -55,8 +53,8 @@ function GetDocument({ params }) {
           publisherID,
         } = doc;
         return (
-          <div  key={id} className="flex justify-start  items-center ">
-            <div>
+          <div key={id} className="flex justify-start  items-center ">
+            <div key={id}>
               <h1 className="text-xl capitalize font-semibold ">{blogTitle}</h1>
               <button className="cursor-auto bg-pry p-2 md:p-3 text-xs lg:text-base font-medium  mt-6 text-white">
                 {category}
@@ -64,11 +62,9 @@ function GetDocument({ params }) {
               <p className="mt-6">{blogContent}</p>
               <div className="flex flex-col mt-6  ">
                 <p className="text-xs  lg:text-base ">
-                  <b>Author</b>: {author} 
+                  <b>Author</b>: {author}
                 </p>
-                <p className="text-xs lg:text-base">
-                  {datePublished}
-                </p>
+                <p className="text-xs lg:text-base">{datePublished}</p>
               </div>
             </div>
           </div>

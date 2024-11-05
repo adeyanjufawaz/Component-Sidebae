@@ -97,9 +97,12 @@ const Blogs = () => {
             publisherID,
           } = blog;
           return (
-            <div key={id}>
-              <Link href={`/blogs/${id}`}>
-                <div className="min-h-[250px] md:min-h-[270px] w-40 md:w-56 rounded-md lg:w-72 p-3 shadow-2xl ">
+            <div
+              key={id}
+              className="min-h-[250px] w-40 md:w-56 rounded-md lg:w-72 p-3 shadow-2xl "
+            >
+              <div>
+                <Link href={`/blogs/${id}`}>
                   <p className="mt-4 truncate font-bold uppercase ">
                     {blogTitle}
                   </p>
@@ -116,17 +119,16 @@ const Blogs = () => {
                     </p>
                   </div>
                   <p>{calculateReadTime(blogContent)} read</p>
-
-                  {loggedUserID == publisherID && (
-                    <button
-                      onClick={() => deleteBlog(id)}
-                      className="mt-4 bg-red-400 py-2 px-5 right-0"
-                    >
-                      Delete
-                    </button>
-                  )}
-                </div>
-              </Link>
+                </Link>
+              </div>
+              {loggedUserID == publisherID && (
+                <button
+                  onClick={() => deleteBlog(id)}
+                  className="mt-4 bg-red-400 text-white py-2 px-5 right-0"
+                >
+                  Delete
+                </button>
+              )}
             </div>
           );
         })}

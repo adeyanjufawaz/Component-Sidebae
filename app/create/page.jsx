@@ -5,18 +5,18 @@ import { useEffect, useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { formmatedDate } from "../lib/dateFormatter";
 import { useRouter } from "next/navigation";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function About() {
   const [publisher, setPublisher] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [category, setCategory] = useState("Tech & Science");
+  const [publisherid, setPublisherID] = useState("");
   const [blogData, setBlogData] = useState({
     datePublished: formmatedDate(),
     category: category,
   });
 
-  const [blogImg, setBlogImg] = useState("");
-  const [publisherid, setPublisherID] = useState("");
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -25,21 +25,16 @@ export default function About() {
   };
   const router = useRouter();
 
-  useEffect(() => {
-    const user = auth.currentUser;
-    if (user) {
-      setPublisherID(user.uid);
-      setPublisher(user.displayName);
-    } else {
-      console.log("No user is logged in.");
-    }
-  }, []);
 
 
   const addBlog = async (e) => {
+    const user = auth.currentUser;
+
     e.preventDefault();
     try {
-      const docRef = await addDoc(collection(db, "blogs"), blogData);
+      const docRef = await addDoc(collection(db, "blogs"), {
+        ...blogData, author:user.displayName,publisherID:user.uid
+      });
       console.log("Document written with ID: ", docRef);
       router.push("/blogs");
     } catch (e) {
@@ -80,7 +75,7 @@ export default function About() {
             className="bg-pry cursor-pointer p-4 text-white"
           >
             <option value="Tech & Science">Tech & Science</option>
-            <option value="sports & entertainment">
+            <option value="Sports & entertainment">
               Sports & Entertainment
             </option>
             <option value="Lifestyle & Fashion">Lifestyle & Fashion</option>
@@ -91,14 +86,6 @@ export default function About() {
             <option value="others">others</option>
           </select>
 
-          <label className="customized_h2">Upload blog Image</label>
-          <input
-            className="p-3 max-w-60 border-2 border-pry outline-none text-pry"
-            onChange={(e) => setBlogImg(e.target.files[0])}
-            type="file"
-            required
-            placeholder="Upload file"
-          />
 
           {!isUploading ? (
             <button className="bg-pry max-w-32 p-3 mt-4 text-white ">
