@@ -63,7 +63,7 @@ export default function Navbar() {
         </h2>
 
         <button
-          className="bg-pry hover:bg-purple-600 p-6 text-lg text-white flex justify-center items-center"
+          className="bg-pry hover:bg-purple-600 p-5 text-lg text-white flex justify-center items-center"
           onClick={goToBlogs}
         >
           <p>Add blog</p>
