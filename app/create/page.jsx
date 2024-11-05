@@ -34,7 +34,7 @@ export default function About() {
     } else {
       console.log("No user is logged in.");
     }
-  }, [blogData]);
+  }, []);
 
   useEffect(() => {
     const uploadFile = () => {
@@ -48,10 +48,10 @@ export default function About() {
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log("Upload is " + progress + "% done");
           if (progress == 0) {
-            setIsUploading(true)
+            setIsUploading(true);
           }
           if (progress == 100) {
-            setIsUploading(false)
+            setIsUploading(false);
           }
           switch (snapshot.state) {
             case "paused":
@@ -81,7 +81,7 @@ export default function About() {
     };
 
     blogImg && uploadFile();
-  }, [blogImg]);
+  }, [blogData, blogImg,publisher, publisherid]);
 
   const addBlog = async (e) => {
     e.preventDefault()

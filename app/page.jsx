@@ -42,13 +42,7 @@ export default function Home() {
             </p>
           </div>
           <div className="min-h-96 lg:p-8 p-4">
-            <Image
-              src={childrenImg}
-              alt="Children"
-              width={500}
-              height={300}
-             
-            />
+            <Image src={childrenImg} alt="Children" width={500} height={300} />
           </div>
         </div>
         {/* Why you should join chatter */}
@@ -101,10 +95,11 @@ export default function Home() {
           </div>
           <div>
             <h1>
-              "Chatter has become an integral part of my online experience. As a
-              user of this incredible blogging platform, I have discovered a
-              vibrant community of individuals who are passionate about sharing
-              their ideas and engaging in thoughtful discussions.”
+              `&quot;`Chatter has become an integral part of my online
+              experience. As a user of this incredible blogging platform, I have
+              discovered a vibrant community of individuals who are passionate
+              about sharing their ideas and engaging in thoughtful
+              discussions.`&quot;`
             </h1>
             <h2 className="my-12">
               <b>Adebobola Muhydeen</b>, Software developer at Apple
