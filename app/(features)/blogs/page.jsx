@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import { MdEdit } from "react-icons/md";
 import { auth, db } from "@/config/firebase";
 import { collection, getDocs } from "firebase/firestore";
-import Image from "next/image";
-import img from "../../../public/mainMan.png";
+import { useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
 import { calculateReadTime } from "@/app/lib/calcReadTime";
 import Link from "next/link";
@@ -22,12 +21,11 @@ const Blogs = () => {
     // Listen for auth state changes
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        console.log(currentUser);
-        console.log(`Logged user : ${currentUser.uid}`);
         setLoggedUserID(currentUser.uid);
+      } else {
+        console.log("No logged user");
       }
     });
-
     // Cleanup listener on component unmount
     return () => unsubscribe();
   }, [loggedUserID]);
@@ -49,13 +47,17 @@ const Blogs = () => {
     }
   };
 
+  const router = useRouter();
   useEffect(() => {
-    // Function to fetch data from Firestore
+    const user = auth.currentUser;
+    if (!user) {
+      console.log("No user is logged in.");
+      router.push("/");
+    }
 
+    // Function to fetch data from Firestore
     getBlogs();
   }, []);
-
-  // if (loading) return <p>Loading...</p>;
 
   const deleteBlog = async (blogID) => {
     await deleteDoc(doc(db, "blogs", blogID));
@@ -78,9 +80,8 @@ const Blogs = () => {
         </Link>
       </div>
 
-      <div className="min-h-8 mt-10 gap-7 lg:gap-10 flex flex-wrap justify-center ">
+      <div className="min-h-8  mt-10 gap-7 lg:gap-10 flex flex-wrap justify-center ">
         {blogs.map((blog) => {
-          console.log(blog);
           const {
             author,
             blogContent,
@@ -92,52 +93,37 @@ const Blogs = () => {
             publisherID,
           } = blog;
           return (
-            <>
-              <div
-                key={id}
-                className="w-40 md:w-56 rounded-md lg:w-72 p-3 shadow-2xl "
-              >
-                {/* Card__Img-section */}
-
-                <div
-                  className={`h-24 md:h-40 lg:h-60 bg-slate-500 ${
-                    !img && "animate-pulse"
-                  } w-full mt-4 relative rounded-md`}
-                >
-                  <Image
-                    src={img}
-                    width={100}
-                    height={100}
-                    className="absolute rounded-md w-full h-full"
-                    alt={category}
-                  />
-                </div>
-
-                <button className="cursor-auto bg-pry p-2 text-xs lg:text-base font-medium  mt-4 text-white">
-                  {category}
-                </button>
-                <p className="mt-4 truncate ">{blogTitle}</p>
-
-                <div className="flex flex-col mt-4 ">
-                  <p className="text-xs lg:text-base ">
-                    <b>Author</b>: {author}
+            <div key={id}>
+              <Link href={`/blogs/${id}`}>
+                <div className="min-h-[250px] md:min-h-[270px] w-40 md:w-56 rounded-md lg:w-72 p-3 shadow-2xl ">
+                  <p className="mt-4 truncate font-bold uppercase ">
+                    {blogTitle}
                   </p>
-                  <p className="text-xs lg:text-base font-semibold">
-                    {datePublished}
-                  </p>
-                </div>
-                <p>{calculateReadTime(blogContent)} read</p>
-
-                {loggedUserID == publisherID && (
-                  <button
-                    onClick={() => deleteBlog(id)}
-                    className="mt-4 bg-red-500 py-2 px-5 right-0"
-                  >
-                    Delete
+                  <button className="cursor-auto bg-pry p-2 text-xs lg:text-base font-medium  mt-4 text-white">
+                    {category}
                   </button>
-                )}
-              </div>
-            </>
+
+                  <div className="flex flex-col mt-4 ">
+                    <p className="text-xs lg:text-base ">
+                      <b>Author</b>: {author}
+                    </p>
+                    <p className="text-xs lg:text-base font-semibold">
+                      {datePublished}
+                    </p>
+                  </div>
+                  <p>{calculateReadTime(blogContent)} read</p>
+
+                  {loggedUserID == publisherID && (
+                    <button
+                      onClick={() => deleteBlog(id)}
+                      className="mt-4 bg-red-400 py-2 px-5 right-0"
+                    >
+                      Delete
+                    </button>
+                  )}
+                </div>
+              </Link>
+            </div>
           );
         })}
       </div>
@@ -146,6 +132,3 @@ const Blogs = () => {
 };
 
 export default Blogs;
-
-
-

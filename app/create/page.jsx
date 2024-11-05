@@ -9,12 +9,12 @@ import { useRouter } from "next/navigation";
 export default function About() {
   const [publisher, setPublisher] = useState("");
   const [isUploading, setIsUploading] = useState(false);
-  const [category, setCategory] = useState("Tech & Science")
+  const [category, setCategory] = useState("Tech & Science");
   const [blogData, setBlogData] = useState({
     datePublished: formmatedDate(),
-    category:category
+    category: category,
   });
-  
+
   const [blogImg, setBlogImg] = useState("");
   const [publisherid, setPublisherID] = useState("");
 
@@ -24,7 +24,6 @@ export default function About() {
     setBlogData({ ...blogData, [name]: value });
   };
   const router = useRouter();
-
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -36,55 +35,9 @@ export default function About() {
     }
   }, []);
 
-  useEffect(() => {
-    const uploadFile = () => {
-      const name = new Date().getTime();
-      const storageRef = ref(storage, `${name + blogImg.name}`);
-      const uploadTask = uploadBytesResumable(storageRef, blogImg);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          if (progress == 0) {
-            setIsUploading(true);
-          }
-          if (progress == 100) {
-            setIsUploading(false);
-          }
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-          }
-        },
-        (error) => {
-          console.log(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            console.log("File available at", downloadURL);
-            setBlogData({
-              ...blogData,
-              publisherID: publisherid,
-              author: publisher,
-              img: downloadURL,
-            });
-          });
-        }
-      );
-      console.log(blogData);
-    };
-
-    blogImg && uploadFile();
-  }, [blogData, blogImg,publisher, publisherid]);
 
   const addBlog = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const docRef = await addDoc(collection(db, "blogs"), blogData);
       console.log("Document written with ID: ", docRef);
@@ -152,7 +105,10 @@ export default function About() {
               Add Blog
             </button>
           ) : (
-            <button disabled className="bg-red-400 max-w-32 p-3 mt-4 text-white ">
+            <button
+              disabled
+              className="bg-red-400 max-w-32 p-3 mt-4 text-white "
+            >
               Uploading .....
             </button>
           )}
