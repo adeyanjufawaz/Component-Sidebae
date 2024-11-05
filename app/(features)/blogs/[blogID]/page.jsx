@@ -36,7 +36,7 @@ function GetDocument({ params }) {
     fetchDocument();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className="m-10 mt-28">Loading...</p>;
   if (error) return <p>{error}</p>;
 
   return (

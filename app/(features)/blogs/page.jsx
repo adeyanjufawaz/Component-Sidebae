@@ -64,6 +64,10 @@ const Blogs = () => {
     getBlogs();
   };
 
+  if (loading) {
+    return (<h2>Loading ...</h2>)
+  }
+
   return (
     <div className=" p-3 md:p-7">
       <div className="flex px-2 gap-8 justify-between items-center">
