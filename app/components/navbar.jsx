@@ -62,11 +62,12 @@ export default function Navbar() {
           <Link href="/">CHatter</Link>
         </h2>
 
-        <div className="flex gap-3 ">
-          <button className="customized_h3" onClick={goToBlogs}>
-            <p>Blogs</p>
-          </button>
-        </div>
+        <button
+          className="bg-pry hover:bg-purple-600 p-6 text-lg text-white flex justify-center items-center"
+          onClick={goToBlogs}
+        >
+          <p>Add blog</p>
+        </button>
       </nav>
     </div>
   );
