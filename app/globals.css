@@ -21,7 +21,7 @@ body {
   @apply font-semibold text-[1rem] cursor-pointer;
 }
 .customized_p {
-  @apply text-[14px] lg:text-[18px];
+  @apply text-[18px];
 }
 .customized_btn {
   @apply border py-3 rounded-lg text-white bg-pry px-10;
