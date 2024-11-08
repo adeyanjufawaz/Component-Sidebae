@@ -5,9 +5,9 @@ import mainMan from "../public/mainMan.png";
 import img1 from "../public/staff1.png"
 import img2 from "../public/staff2.png"
 import img3 from "../public/staff3.png"
-import { useRouter } from "next/navigation";
 
 export default function Home() {
+    
 
   return (
     <>

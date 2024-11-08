@@ -16,6 +16,8 @@ const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [loggedUserID, setLoggedUserID] = useState("");
   const [loading, setLoading] = useState(true);
+  
+  const router = useRouter();
 
   useEffect(() => {
     // Listen for auth state changes
@@ -47,12 +49,11 @@ const Blogs = () => {
     }
   };
 
-  const router = useRouter();
   useEffect(() => {
     const user = auth.currentUser;
     if (!user) {
       console.log("No user is logged in.");
-      router.push("/");
+      router.push("/login");
     }
 
     // Function to fetch data from Firestore
@@ -62,11 +63,11 @@ const Blogs = () => {
   const deleteBlog = async (blogID) => {
     await deleteDoc(doc(db, "blogs", blogID));
     getBlogs();
-  };
-
-  if (loading) {
-    return (<h2>Loading ...</h2>)
   }
+
+  // if (loading) {
+  //   return (<h2>Loading ...</h2>)
+  // }
 
   return (
     <div className=" p-3 md:p-7">
@@ -76,7 +77,7 @@ const Blogs = () => {
           <p className="customized_p">Explore content you&apos;d love</p>
         </div>
         <Link
-          href="/create"
+          href="/blogs/create"
           className="blog_btn  flex justify-center items-center gap-2"
         >
           <MdEdit />

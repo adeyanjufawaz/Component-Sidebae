@@ -75,14 +75,3 @@ function GetDocument({ params }) {
 }
 
 export default GetDocument;
-
-// const {
-//   author,
-//   blogContent,
-//   blogTitle,
-//   datePublished,
-//   category,
-//   id,
-//   img,
-//   publisherID,
-// } = blog;

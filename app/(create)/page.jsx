@@ -2,21 +2,15 @@
 import { auth, db, storage } from "@/config/firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { formmatedDate } from "../lib/dateFormatter";
 import { useRouter } from "next/navigation";
-import { onAuthStateChanged } from "firebase/auth";
 
-export default function About() {
-  const [publisher, setPublisher] = useState("");
-  const [isUploading, setIsUploading] = useState(false);
+function Create() {
   const [category, setCategory] = useState("Tech & Science");
-  const [publisherid, setPublisherID] = useState("");
   const [blogData, setBlogData] = useState({
     datePublished: formmatedDate(),
     category: category,
   });
-
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -25,15 +19,15 @@ export default function About() {
   };
   const router = useRouter();
 
-
-
   const addBlog = async (e) => {
     const user = auth.currentUser;
 
     e.preventDefault();
     try {
       const docRef = await addDoc(collection(db, "blogs"), {
-        ...blogData, author:user.displayName,publisherID:user.uid
+        ...blogData,
+        author: user.displayName,
+        publisherID: user.uid,
       });
       console.log("Document written with ID: ", docRef);
       router.push("/blogs");
@@ -75,7 +69,7 @@ export default function About() {
             className="bg-pry cursor-pointer p-4 text-white"
           >
             <option value="Tech & Science">Tech & Science</option>
-            <option value="Sports & entertainment">
+            <option value="Sports & Entertainment">
               Sports & Entertainment
             </option>
             <option value="Lifestyle & Fashion">Lifestyle & Fashion</option>
@@ -83,24 +77,16 @@ export default function About() {
             <option value="Education">Education</option>
             <option value="Banking & Finance">Banking & Finance</option>
             <option value="Growth & Development">Growth & Development</option>
-            <option value="others">others</option>
+            <option value="Others">Others</option>
           </select>
 
-
-          {!isUploading ? (
-            <button className="bg-pry max-w-32 p-3 mt-4 text-white ">
-              Add Blog
-            </button>
-          ) : (
-            <button
-              disabled
-              className="bg-red-400 max-w-32 p-3 mt-4 text-white "
-            >
-              Uploading .....
-            </button>
-          )}
+          <button className="bg-pry max-w-32 p-3 mt-4 text-white ">
+            Add Blog
+          </button>
         </form>
       </div>
     </div>
   );
 }
+
+export default Create;
