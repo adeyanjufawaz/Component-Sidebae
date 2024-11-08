@@ -60,11 +60,11 @@ function GetDocument({ params }) {
                 {category}
               </button>
               <p className="mt-6">{blogContent}</p>
-              <div className="flex flex-col mt-6  ">
-                <p className="text-xs  lg:text-base ">
+              <div className="flex flex-col mt-8  ">
+                <p className="text-xl ">
                   <b>Author</b>: {author}
                 </p>
-                <p className="text-xs lg:text-base">{datePublished}</p>
+                <p className="text-xl font-semibold mt-2">{datePublished}</p>
               </div>
             </div>
           </div>
