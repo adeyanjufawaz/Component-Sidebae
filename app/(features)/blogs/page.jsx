@@ -107,7 +107,7 @@ const Blogs = () => {
                   <p className="mt-4 truncate font-bold uppercase ">
                     {blogTitle}
                   </p>
-                  <button className="cursor-auto bg-pry p-2 text-xs lg:text-base font-medium  mt-4 text-white">
+                  <button className="bg-pry p-2 text-xs lg:text-base font-medium  mt-4 text-white">
                     {category}
                   </button>
 

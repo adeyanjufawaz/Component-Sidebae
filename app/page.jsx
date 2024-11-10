@@ -5,6 +5,7 @@ import mainMan from "../public/mainMan.png";
 import img1 from "../public/staff1.png"
 import img2 from "../public/staff2.png"
 import img3 from "../public/staff3.png"
+import { delay, motion } from "framer-motion";
 
 export default function Home() {
     
@@ -28,7 +29,12 @@ export default function Home() {
       <section id="about" className="p-2 md:p-4 lg:p-6">
         {/* About Chatter */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-[1.3fr,1fr]">
-          <div className="p-8 flex flex-col justify-center items-start ">
+          <motion.div
+            initial={{ y: 30, opacity: 0, scale: 0.3 }}
+            whileInView={{ y: 0, opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="p-8 flex flex-col justify-center items-start "
+          >
             <h1 className="customized_header">About Chatter</h1>
             <p className="customized_p">
               Chatter is a multi-functional platform where authors and readers
@@ -40,60 +46,99 @@ export default function Home() {
               their backgrounds or beliefs. By promoting dialogue and
               understanding, we strive
             </p>
-          </div>
-          <div className="min-h-96 lg:p-8 p-4">
+          </motion.div>
+          <motion.div
+            initial={{ y: 30, opacity: 0, scale: 0.3 }}
+            whileInView={{ y: 0, opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="min-h-96 lg:p-8 p-4"
+          >
             <Image src={childrenImg} alt="Children" width={500} height={300} />
-          </div>
+          </motion.div>
         </div>
-        {/* Why you should join chatter */}
-        <div className="lg:mt-8 mt-2 flex flex-col justify-center items-center pb-14 ">
-          <h2 className="customized_header text-center ">
-            Why you should join chatter
-          </h2>
-          <p className="customized_p w-3/4 ">
-            Our goal is to make writers and readers see our platform as their
-            next heaven for blogging, ensuring ease in interactions, connecting
-            with like-minded peers, have access to favorite content based on
-            interests and able to communicate your great ideas with people
-          </p>
-          <div className="grid grid-cols-1 items-center lg:grid-cols-3 w-[70%] justify-center mt-16 gap-10">
-            <div className="min-h-[250px] md:min-h-[120px] flex flex-col gap-4 p-5 border-[grey] border rounded-[7px]">
-              <h2 className="customized_h1">Analytics</h2>
-              <p className="">
-                Analytics to track the number of views, likes and comment and
-                also analyze the performance of your articles over a period of
-                time
-              </p>
-            </div>
-            <div className="min-h-[250px] md:min-h-[120px] flex flex-col gap-4 p-5 border-[grey] border rounded-[7px]">
-              <h2 className="customized_h1">Social Interactions</h2>
-              <p>
-                Users on the platform can interact with posts they like, comment
-                and engage in discussions
-              </p>
-            </div>
-            <div className="min-h-[250px] md:min-h-[120px] flex flex-col gap-4 p-5 border-[grey] border rounded-[7px]">
-              <h2 className="customized_h1">Content creation.</h2>
-              <p>
-                Write nice and appealing with our in-built markdown, a rich text
-                editor
-              </p>
-            </div>
-          </div>
+      </section>
+
+      {/* Why you should join chatter */}
+      <section className="lg:mt-8 mt-2 flex flex-col justify-center items-center pb-14 ">
+        <motion.h2
+          initial={{ x: 300 }}
+          whileInView={{ x: 0 }}
+          transition={{ duration: 0.7 }}
+          className="customized_header text-center "
+        >
+          Why you should join chatter
+        </motion.h2>
+        <motion.p
+          initial={{ y: 200 }}
+          whileInView={{ y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="customized_p w-3/4 "
+        >
+          Our goal is to make writers and readers see our platform as their next
+          heaven for blogging, ensuring ease in interactions, connecting with
+          like-minded peers, have access to favorite content based on interests
+          and able to communicate your great ideas with people
+        </motion.p>
+        <div className="grid grid-cols-1 items-center lg:grid-cols-3 w-[70%] justify-center mt-16 gap-10">
+          <motion.div
+            initial={{ y: 30, opacity: 0, scale: 0.3 }}
+            whileInView={{ y: 0, opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="min-h-[250px] md:min-h-[120px] flex flex-col gap-4 p-5 border-[grey] border rounded-[7px]"
+          >
+            <h2 className="customized_h1">Analytics</h2>
+            <p className="">
+              Analytics to track the number of views, likes and comment and also
+              analyze the performance of your articles over a period of time
+            </p>
+          </motion.div>
+          <motion.div
+            initial={{ y: 30, opacity: 0, scale: 0.3 }}
+            whileInView={{ y: 0, opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="min-h-[250px] md:min-h-[120px] flex flex-col gap-4 p-5 border-[grey] border rounded-[7px]"
+          >
+            <h2 className="customized_h1">Social Interactions</h2>
+            <p>
+              Users on the platform can interact with posts they like, comment
+              and engage in discussions
+            </p>
+          </motion.div>
+          <motion.div
+            initial={{ y: 30, opacity: 0, scale: 0.3 }}
+            whileInView={{ y: 0, opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="min-h-[250px] md:min-h-[120px] flex flex-col gap-4 p-5 border-[grey] border rounded-[7px]"
+          >
+            <h2 className="customized_h1">Content creation.</h2>
+            <p>
+              Write nice and appealing with our in-built markdown, a rich text
+              editor
+            </p>
+          </motion.div>
         </div>
       </section>
 
       {/* Review Section */}
       <section id="review" className="p-2 md:p-4 bg-[rgba(235,202,208,.7)]">
         <div className="grid gap-16 p-[3rem] lg:py-10 lg:px-20 grid-cols-1 lg:grid-cols-[1fr,2fr]">
-          <div className="w-56 h-w-56 rounded-full">
+          <motion.div
+            initial={{ y: 30, opacity: 0, scale: 0.3 }}
+            whileInView={{ y: 0, opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="w-56 h-w-56 rounded-full"
+          >
             <Image
               src={mainMan}
               alt="pivcs of a man"
               className="rounded-full"
             />
-          </div>
-          <div>
+          </motion.div>
+          <motion.div
+            initial={{ y: 30, opacity: 0, scale: 0.3 }}
+            whileInView={{ y: 0, opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
             <h1>
               `&quot;`Chatter has become an integral part of my online
               experience. As a user of this incredible blogging platform, I have
@@ -104,13 +149,18 @@ export default function Home() {
             <h2 className="my-12">
               <b>Adebobola Muhydeen</b>, Software developer at Apple
             </h2>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Footer Section */}
       <section className="grid gap-16 p-[3rem] grid-cols-[.5fr,1] lg:grid-cols-[1fr,3fr] ">
-        <div className="img--box relative mx-auto w-full md:w-1/2  lg:w-full min-h-[300px]">
+        <motion.div
+          initial={{ y: 30, opacity: 0, scale: 0.3 }}
+          whileInView={{ y: 0, opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          className="img--box relative mx-auto w-full md:w-1/2  lg:w-full min-h-[300px]"
+        >
           <Image
             src={img1}
             alt="pics of a user"
@@ -126,10 +176,15 @@ export default function Home() {
             alt="pics of a user"
             className="rounded-[50%] absolute bottom-0 left-0- w-[7rem] h-[7rem]"
           />
-        </div>
+        </motion.div>
 
         {/*  */}
-        <div className="lg:w-[70%] mx-auto">
+        <motion.div
+          initial={{ y: 30, opacity: 0, scale: 0.3 }}
+          whileInView={{ y: 0, opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          className="lg:w-[70%] mx-auto"
+        >
           <h1 className="customized_h1 mb-6">
             Write, read and connect with great minds on chatter
           </h1>
@@ -137,7 +192,7 @@ export default function Home() {
             Share people your great ideas, and also read write-ups based on your
             interests. connect with people of same interests and goals
           </p>
-        </div>
+        </motion.div>
       </section>
     </>
   );

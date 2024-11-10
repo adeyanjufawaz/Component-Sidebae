@@ -74,7 +74,7 @@ export default function About() {
             className="bg-pry cursor-pointer p-4 text-white"
           >
             <option value="Tech & Science">Tech & Science</option>
-            <option value="Sports & entertainment">
+            <option value="Sports & ntertainment">
               Sports & Entertainment
             </option>
             <option value="Lifestyle & Fashion">Lifestyle & Fashion</option>
