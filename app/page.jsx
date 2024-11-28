@@ -61,8 +61,8 @@ export default function Home() {
       {/* Why you should join chatter */}
       <section className="lg:mt-8 mt-2 flex flex-col justify-center items-center pb-14 ">
         <motion.h2
-          initial={{ x: 300 }}
-          whileInView={{ x: 0 }}
+          initial={{ y: 50 }}
+          whileInView={{ y: 0 }}
           transition={{ duration: 0.7 }}
           className="customized_header text-center "
         >

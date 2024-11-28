@@ -7,6 +7,10 @@
 
 body {
   font-family: "Open Sans", sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 .customized_header {
   @apply lg:text-[48px] text-[32px] mb-6 font-bold;
@@ -35,6 +39,7 @@ body {
   z-index: 999999999;
   background-color: aliceblue;
   opacity: 0.87;
+
 }
 .homes {
   /* background-image: url("../img/think.png"); */
